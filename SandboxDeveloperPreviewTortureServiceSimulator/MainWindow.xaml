@@ -1,0 +1,205 @@
+﻿<Window x:Class="SandboxDeveloperPreviewTortureServiceSimulator.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SandboxDeveloperPreviewTortureServiceSimulator"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600" Width="1000">
+    <Window.Resources>
+        <Style x:Key="LabelHeader" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="{StaticResource Poppins}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="32"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
+        <Style x:Key="LabelText" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="{StaticResource Poppins}"/>
+            <Setter Property="Foreground" Value="#c6d4ee"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="LineHeight" Value="0.1"/>
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontFamily" Value="{StaticResource Poppins}"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Padding" Value="20,10,20,10"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="2" 
+                                Background="#3173eb" 
+                                BorderBrush="Transparent" 
+                                BorderThickness="0">
+                            <ContentPresenter x:Name="СontentPresenter" 
+                                              ContentTemplate="{TemplateBinding ContentTemplate}" 
+                                              Content="{TemplateBinding Content}" 
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              Margin="{TemplateBinding Padding}" 
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Border CornerRadius="2" 
+                                        Background="#5f93f0" 
+                                        BorderBrush="Transparent" 
+                                        BorderThickness="0">
+                                    <ContentPresenter x:Name="СontentPresenter" 
+                                                      ContentTemplate="{TemplateBinding ContentTemplate}" 
+                                                      Content="{TemplateBinding Content}" 
+                                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                      Margin="{TemplateBinding Padding}" 
+                                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="False">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Border CornerRadius="2" 
+                                        Background="#3173eb" 
+                                        BorderBrush="Transparent" 
+                                        BorderThickness="0">
+                                    <ContentPresenter x:Name="СontentPresenter" 
+                                                      ContentTemplate="{TemplateBinding ContentTemplate}" 
+                                                      Content="{TemplateBinding Content}" 
+                                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                      Margin="{TemplateBinding Padding}" 
+                                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="BorderValues" TargetType="Border">
+            <Setter Property="Background" Value="#414453"/>
+            <Setter Property="CornerRadius" Value="7"/>
+            <Setter Property="Margin" Value="0,0,10,0"/>
+            <Setter Property="Padding" Value="8,0,8,0"/>
+        </Style>
+
+        <Style x:Key="ImageIconKey" TargetType="Image">
+            <Setter Property="Source" Value="Assets/Media/Icons/key.png"/>
+            <Setter Property="Height" Value="25"/>
+        </Style>
+
+        <Style x:Key="ImageIconSchedule" TargetType="Image">
+            <Setter Property="Source" Value="Assets/Media/Icons/schedule.png"/>
+            <Setter Property="Height" Value="25"/>
+        </Style>
+
+        <Style x:Key="ImageIconGroup" TargetType="Image">
+            <Setter Property="Source" Value="Assets/Media/Icons/group.png"/>
+            <Setter Property="Height" Value="25"/>
+        </Style>
+
+        <Style x:Key="ImageIconVisibility" TargetType="Image">
+            <Setter Property="Source" Value="Assets/Media/Icons/visibility.png"/>
+            <Setter Property="Height" Value="25"/>
+        </Style>
+    </Window.Resources>
+    <Grid Background="#3f4456">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="27*"/>
+            <RowDefinition Height="265*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal">
+            <Image Source="Assets/Media/Icons/key.png"
+                   Height="30"
+                   Margin="0,0,10,0"/>
+            <TextBlock Text="Developer Preview Torture Service Simulator"
+                       VerticalAlignment="Center"
+                       Style="{StaticResource LabelHeader}"/>
+        </StackPanel>
+
+        <Border Background="#2c303f" Margin="10,0,10,0" CornerRadius="5" Grid.Row="2">
+            <!--<Border.Effect>
+                <DropShadowEffect ShadowDepth="1" Color="#0004" Direction="90" BlurRadius="5"/>
+            </Border.Effect>-->
+            <!-- description label -->
+            <StackPanel Orientation="Vertical"
+                        Margin="30,30,30,30">
+                <StackPanel.Effect>
+                    <DropShadowEffect ShadowDepth="0.5" Color="Black" Direction="-45" BlurRadius="4" />
+                </StackPanel.Effect>
+                <TextBlock Style="{StaticResource LabelText}"
+                           Margin="0,0,0,20">
+                    <Run Text="This is a simulator of the Developer Preview Torture Service which provides people a chance of getting access to the game s&amp;box - "/>
+                    <Run Text="a Garry's Mod successor, by randomly giving five access keys away every 6 hours. "/>
+                    <Run Text="Here you can estimate your infinitely tiny odds in obtaining the game."/>
+                    <LineBreak/>
+                    <LineBreak/>
+                    <Run Text="Write down the amount of people participating and run the simulation."/>
+                    <LineBreak/>
+                    <Run Text="Let the luck be with you. This I miss."/>
+                </TextBlock>
+                <DockPanel>
+                    <StackPanel Orientation="Horizontal"
+                                Margin="10,0,0,0">
+                        <Border Style="{StaticResource BorderValues}">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Style="{StaticResource ImageIconKey}"
+                                       Margin="0,0,10,0"/>
+                                <TextBlock Name="LabelKeyAmount"
+                                           Text="5"
+                                           Style="{StaticResource LabelHeader}"
+                                           FontSize="25"/>
+                            </StackPanel>
+                        </Border>
+                        <Border Style="{StaticResource BorderValues}">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Style="{StaticResource ImageIconSchedule}"
+                                       Margin="0,0,10,0"/>
+                                <TextBlock Name="LabelTime"
+                                           Text="4h 20m 0s"
+                                           Style="{StaticResource LabelHeader}"
+                                           FontSize="25"/>
+                            </StackPanel>
+                        </Border>
+                        <Border Style="{StaticResource BorderValues}">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Style="{StaticResource ImageIconGroup}"
+                                       Margin="0,0,10,0"/>
+                                <TextBlock Name="LabelParticipantAmount"
+                                           Text="69"
+                                           Style="{StaticResource LabelHeader}"
+                                           FontSize="25"/>
+                            </StackPanel>
+                        </Border>
+                        <Border Style="{StaticResource BorderValues}">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Style="{StaticResource ImageIconVisibility}"
+                                       Margin="0,0,10,0"/>
+                                <TextBlock Name="LabelViewerAmount"
+                                           Text="1,337"
+                                           Style="{StaticResource LabelHeader}"
+                                           FontSize="25"/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                    <Button Name="ButtonStartSimulation" 
+                            Content="start simulation"
+                            HorizontalAlignment="Right"/>
+                </DockPanel>
+            </StackPanel>
+        </Border>
+
+    </Grid>
+</Window>

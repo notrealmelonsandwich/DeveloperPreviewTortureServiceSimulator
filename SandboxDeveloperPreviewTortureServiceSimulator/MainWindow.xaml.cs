@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SandboxDeveloperPreviewTortureServiceSimulator.MVVM.ViewModel;
+using System;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace SandboxDeveloperPreviewTortureServiceSimulator
 {
@@ -20,9 +9,34 @@ namespace SandboxDeveloperPreviewTortureServiceSimulator
     /// </summary>
     public partial class MainWindow : Window
     {
+        private int _keys;
+        private int _participants;
+
+        private Random _random;
+
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new ParticipantViewModel();
+            _random = new Random();
+        }
+
+        private void ButtonStartSimulation_Click(object sender, RoutedEventArgs e)
+        {
+            int.TryParse(TextBoxKeyAmount.Text, out _keys);
+            int.TryParse(TextBoxParticipants.Text, out _participants);
+
+            Simulate(_keys, _participants);
+        }
+
+        private void Simulate(int keys, int participants)
+        {
+            GenerateUsers(participants);
+        }
+
+        private void GenerateUsers(int amount)
+        {
+
         }
     }
 }

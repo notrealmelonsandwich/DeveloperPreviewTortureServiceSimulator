@@ -3,9 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SandboxDeveloperPreviewTortureServiceSimulator"
+        xmlns:local="clr-namespace:SandboxDeveloperPreviewTortureServiceSimulator" xmlns:viewmodel="clr-namespace:SandboxDeveloperPreviewTortureServiceSimulator.MVVM.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:ParticipantViewModel}"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="1000">
+        Title="s&amp;box developer preview torture service simulator"
+        Height="800" 
+        Width="1000"
+        WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style x:Key="LabelHeader" TargetType="TextBlock">
             <Setter Property="FontFamily" Value="{StaticResource Poppins}"/>
@@ -94,6 +97,24 @@
             <Setter Property="Padding" Value="8,0,8,0"/>
         </Style>
 
+        <Style TargetType="TextBox">
+            <Setter Property="Background" Value="#FF53597B"/>
+            <Setter Property="Margin" Value="0,0,10,0"/>
+            <Setter Property="Padding" Value="8,0,8,0"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontFamily" Value="{StaticResource Poppins}"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Padding" Value="5,3,5,0"/>
+            <Setter Property="TextAlignment" Value="Right"/>
+            <Setter Property="Foreground" Value="#c6d4ee"/>
+            <Style.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="3"/>
+                </Style>
+            </Style.Resources>
+        </Style>
+        
+        <!-- icons -->
         <Style x:Key="ImageIconKey" TargetType="Image">
             <Setter Property="Source" Value="Assets/Media/Icons/key.png"/>
             <Setter Property="Height" Value="25"/>
@@ -150,7 +171,28 @@
                     <LineBreak/>
                     <Run Text="Let the luck be with you. This I miss."/>
                 </TextBlock>
-                <DockPanel>
+                
+                <!-- simulation data inputs -->
+                <StackPanel Orientation="Horizontal"
+                            Margin="10,0,0,10">
+                    <Image Style="{StaticResource ImageIconKey}"
+                           Margin="0,0,10,0"/>
+                    <TextBox Name="TextBoxKeyAmount" 
+                             Text="5"
+                             Width="250"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal"
+                            Margin="10,0,0,25">
+                    <Image Style="{StaticResource ImageIconGroup}"
+                           Margin="0,0,10,0"/>
+                    <TextBox Name="TextBoxParticipants" 
+                             Text="300"
+                             Width="250"/>
+                </StackPanel>
+
+                <!-- data visualization -->
+                <DockPanel Margin="0,0,0,25">
                     <StackPanel Orientation="Horizontal"
                                 Margin="10,0,0,0">
                         <Border Style="{StaticResource BorderValues}">
@@ -196,8 +238,18 @@
                     </StackPanel>
                     <Button Name="ButtonStartSimulation" 
                             Content="start simulation"
+                            Click="ButtonStartSimulation_Click"
                             HorizontalAlignment="Right"/>
                 </DockPanel>
+                <ListView Name="ListViewParticipants" ItemsSource="{Binding Participants}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding Path=Photo}" 
+                                   ToolTip="{Binding Path=Name}"
+                                   Height="32"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
             </StackPanel>
         </Border>
 

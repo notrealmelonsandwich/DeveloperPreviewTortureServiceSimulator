@@ -4,9 +4,12 @@ using SandboxDeveloperPreviewTortureServiceSimulator.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 
 namespace SandboxDeveloperPreviewTortureServiceSimulator
@@ -16,7 +19,7 @@ namespace SandboxDeveloperPreviewTortureServiceSimulator
     /// </summary>
     public partial class MainWindow : Window
     {
-        private const int MaxParticipantsInRow = 30;
+        private const int MaxParticipantsInRow = 36;
 
         private int _keys;
         private int _participants;
@@ -42,7 +45,7 @@ namespace SandboxDeveloperPreviewTortureServiceSimulator
 
         #region Participant grid drawing
 
-        private void DrawGrid()
+        private async void DrawGrid()
         {
             CreateRow();
             foreach (StackPanel row in StackPanelParticipantGrid.Children)
@@ -55,7 +58,7 @@ namespace SandboxDeveloperPreviewTortureServiceSimulator
                 if (ParticipantGridRows[ParticipantGridRows.Count - 1].Children.Count >= MaxParticipantsInRow)
                     CreateRow();
 
-                DrawUserCell(participant);
+                await DrawUserCell(participant);
                 participant.Index = ParticipantGridRows[ParticipantGridRows.Count - 1].Children.Count - 1;
                 participant.RowIndex = ParticipantGridRows.Count - 1;
 
@@ -89,28 +92,34 @@ namespace SandboxDeveloperPreviewTortureServiceSimulator
             return result;
         }
 
-        private void DrawUserCell(ParticipantModel participant)
+        private async Task DrawUserCell(ParticipantModel participant)
         {
-            Border border = new Border();
-            ImageBrush borderBrush = new ImageBrush();
-
-            border.CornerRadius = new CornerRadius(4);
-            border.Height = 32;
-            border.Width = 32;
-            border.ToolTip = participant.Name;
-            border.Margin = new Thickness(2);
-            border.Background = borderBrush;
-
-            borderBrush.Stretch = Stretch.Fill;
-            borderBrush.ImageSource = new BitmapImage(new Uri($"pack://application:,,,/{participant.Photo}"));
-
-            if (participant.IsClient)
+            Dispatcher.Invoke(() =>
             {
-                border.BorderThickness = new Thickness(3);
-                border.BorderBrush = Brushes.Pink;
-            }
+                Border border = new Border();
+                ImageBrush borderBrush = new ImageBrush();
 
-            ParticipantGridRows[ParticipantGridRows.Count - 1].Children.Add(border);
+                border.CornerRadius = new CornerRadius(4);
+                border.Height = 32;
+                border.Width = 32;
+                border.ToolTip = participant.Name;
+                border.Margin = new Thickness(2);
+                border.Background = borderBrush;
+
+                borderBrush.Stretch = Stretch.Fill;
+                borderBrush.ImageSource = new BitmapImage(new Uri($"pack://application:,,,/{participant.Photo}"));
+
+                if (participant.IsClient)
+                {
+                    border.BorderThickness = new Thickness(3);
+                    border.BorderBrush = Brushes.Pink;
+                }
+
+                ParticipantGridRows[ParticipantGridRows.Count - 1].Children.Add(border);
+            });
+
+            // fix animation to make it sync with the raffle start
+            await Task.Delay(0);
         }
 
         private void CreateRow()
@@ -134,25 +143,33 @@ namespace SandboxDeveloperPreviewTortureServiceSimulator
             border.BorderBrush = Brushes.Yellow;
         }
 
+        private void UndrawWinner(ParticipantModel participant)
+        {
+            Border border = GetParticipantCell(participant);
+            border.BorderThickness = new Thickness(0);
+        }
+
         #endregion
 
-        private void ButtonStartSimulation_Click(object sender, RoutedEventArgs e)
+        private void ParseSettings()
         {
             int.TryParse(TextBoxKeyAmount.Text, out _keys);
             int.TryParse(TextBoxParticipants.Text, out _participants);
+        }
 
+        private void ButtonStartSimulation_Click(object sender, RoutedEventArgs e)
+        {
+            ParseSettings();
             Simulate(_keys, _participants, false);
         }
 
         private void ButtonStartMultipleSimulation_Click(object sender, RoutedEventArgs e)
         {
-            int.TryParse(TextBoxKeyAmount.Text, out _keys);
-            int.TryParse(TextBoxParticipants.Text, out _participants);
-
+            ParseSettings();
             Simulate(_keys, _participants, true);
         }
 
-        private void Simulate(int keys, int participants, bool multipleTimes)
+        private async void Simulate(int keys, int participants, bool multipleTimes)
         {
             ClearGrid();
             GenerateUsers(participants);
@@ -161,7 +178,7 @@ namespace SandboxDeveloperPreviewTortureServiceSimulator
             {
                 DrawGrid();
                 //UpdateGrid();
-                PickWinner();
+                await GiveawayAnimation(PickWinners());
             }
             else
             {
@@ -179,7 +196,11 @@ namespace SandboxDeveloperPreviewTortureServiceSimulator
                         if (winner.IsClient)
                             containsClient = true;
 
-                        winners[i - 1] = winner;
+                        // avoiding repeatings
+                        if (!winners.ToList().Contains(winner))
+                            winners[i - 1] = winner;
+                        else
+                            i -= 1;
                     }
 
                     if (!containsClient)
@@ -197,7 +218,46 @@ namespace SandboxDeveloperPreviewTortureServiceSimulator
             }
         }
 
-        private void PickWinner()
+        #region Animations
+        private async Task GiveawayAnimation(ParticipantModel[] winners)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                ButtonStartSimulation.Visibility = Visibility.Hidden;
+                ButtonStartMultipleSimulation.Visibility = Visibility.Hidden;
+                PanelWinner.Visibility = Visibility.Visible;
+                LabelWinner.Text = "...";
+            });
+            await Task.Delay(3000);
+
+            foreach (ParticipantModel winner in winners)
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    DrawWinner(winner);
+                    LabelWinner.Text = winner.Name;
+                });
+                await Task.Delay(3000);
+                Dispatcher.Invoke(() => UndrawWinner(winner));
+            }
+
+            Dispatcher.Invoke(() =>
+            {
+                ButtonStartSimulation.Visibility = Visibility.Visible;
+                ButtonStartMultipleSimulation.Visibility = Visibility.Visible;
+                PanelWinner.Visibility = Visibility.Hidden;
+                LabelWinner.Text = "...";
+            });
+            ClearGrid();
+        }
+
+        private void PlayAnimation(bool victory)
+        {
+            // TODO
+        }
+        #endregion
+
+        private ParticipantModel[] PickWinners()
         {
             ParticipantModel[] winners = new ParticipantModel[_keys];
             bool containsClient = false;
@@ -209,7 +269,7 @@ namespace SandboxDeveloperPreviewTortureServiceSimulator
                     containsClient = true;
 
                 winners[i - 1] = winner;
-                DrawWinner(winner);
+                //DrawWinner(winner);
             }
 
             string text = "The winners are: ";
@@ -224,7 +284,8 @@ namespace SandboxDeveloperPreviewTortureServiceSimulator
             }
 
             string caption = containsClient ? "You won" : "You lost. Again.";
-            MessageBox.Show(text, caption);
+            //MessageBox.Show(text, caption);
+            return winners;
         }
 
         private void GenerateUsers(int amount)
@@ -312,13 +373,10 @@ namespace SandboxDeveloperPreviewTortureServiceSimulator
                 return;
 
             double estimatedOdds = 0;
-            double keys = 0;
-            double users = 0;
-
             try
             {
-                keys = (double)int.Parse(TextBoxKeyAmount.Text);
-                users = (double)int.Parse(TextBoxParticipants.Text);
+                double keys = (double)int.Parse(TextBoxKeyAmount.Text);
+                double users = (double)int.Parse(TextBoxParticipants.Text);
                 estimatedOdds = keys / users * 100;
 
                 LabelKeyAmount.Text = keys.ToString("0");

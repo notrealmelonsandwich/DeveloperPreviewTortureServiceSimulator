@@ -55,6 +55,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="MVVM\View\ProfileEditWindow.xaml.cs">
+      <DependentUpon>ProfileEditWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utilities\RandomExtension.cs" />
     <Compile Include="Utilities\Users.cs" />
     <Page Include="MainWindow.xaml">
@@ -69,6 +72,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="MVVM\View\ProfileEditWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MVVM\Model\ParticipantModel.cs" />
@@ -196,6 +203,33 @@
     <Resource Include="Assets\Media\UserPhotos\patrick.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Media\UserPhotos\markiplier.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Media\UserPhotos\walter.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Media\UserPhotos\crystalcastles.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Media\UserPhotos\alice.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Media\UserPhotos\yourdeath.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Media\UserPhotos\dylan.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Media\UserPhotos\laura.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Media\UserPhotos\sbox.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Media\Icons\casino.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

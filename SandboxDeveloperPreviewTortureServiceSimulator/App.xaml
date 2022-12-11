@@ -5,5 +5,134 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <FontFamily x:Key="Poppins">Assets/Fonts/#Poppins</FontFamily>
+        <Style x:Key="LabelHeader" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="{StaticResource Poppins}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="32"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
+        <Style x:Key="LabelText" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="{StaticResource Poppins}"/>
+            <Setter Property="Foreground" Value="#c6d4ee"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="LineHeight" Value="0.1"/>
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontFamily" Value="{StaticResource Poppins}"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Padding" Value="20,10,20,10"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="2" 
+                                Background="#3173eb" 
+                                BorderBrush="Transparent" 
+                                BorderThickness="0">
+                            <ContentPresenter x:Name="СontentPresenter" 
+                                              ContentTemplate="{TemplateBinding ContentTemplate}" 
+                                              Content="{TemplateBinding Content}" 
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              Margin="{TemplateBinding Padding}" 
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Border CornerRadius="2" 
+                                        Background="#5f93f0" 
+                                        BorderBrush="Transparent" 
+                                        BorderThickness="0">
+                                    <ContentPresenter x:Name="СontentPresenter" 
+                                                      ContentTemplate="{TemplateBinding ContentTemplate}" 
+                                                      Content="{TemplateBinding Content}" 
+                                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                      Margin="{TemplateBinding Padding}" 
+                                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="False">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Border CornerRadius="2" 
+                                        Background="#3173eb" 
+                                        BorderBrush="Transparent" 
+                                        BorderThickness="0">
+                                    <ContentPresenter x:Name="СontentPresenter" 
+                                                      ContentTemplate="{TemplateBinding ContentTemplate}" 
+                                                      Content="{TemplateBinding Content}" 
+                                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                      Margin="{TemplateBinding Padding}" 
+                                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="BorderValues" TargetType="Border">
+            <Setter Property="Background" Value="#414453"/>
+            <Setter Property="CornerRadius" Value="7"/>
+            <Setter Property="Margin" Value="0,0,10,0"/>
+            <Setter Property="Padding" Value="8,0,8,0"/>
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Background" Value="#FF53597B"/>
+            <Setter Property="Margin" Value="0,0,10,0"/>
+            <Setter Property="Padding" Value="8,0,8,0"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontFamily" Value="{StaticResource Poppins}"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Padding" Value="5,3,5,0"/>
+            <Setter Property="TextAlignment" Value="Right"/>
+            <Setter Property="Foreground" Value="#c6d4ee"/>
+            <Style.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="3"/>
+                </Style>
+            </Style.Resources>
+        </Style>
+
+        <!-- icons -->
+        <Style x:Key="ImageIconKey" TargetType="Image">
+            <Setter Property="Source" Value="Assets/Media/Icons/key.png"/>
+            <Setter Property="Height" Value="25"/>
+        </Style>
+
+        <Style x:Key="ImageIconSchedule" TargetType="Image">
+            <Setter Property="Source" Value="Assets/Media/Icons/schedule.png"/>
+            <Setter Property="Height" Value="25"/>
+        </Style>
+
+        <Style x:Key="ImageIconGroup" TargetType="Image">
+            <Setter Property="Source" Value="Assets/Media/Icons/group.png"/>
+            <Setter Property="Height" Value="25"/>
+        </Style>
+
+        <Style x:Key="ImageIconVisibility" TargetType="Image">
+            <Setter Property="Source" Value="Assets/Media/Icons/visibility.png"/>
+            <Setter Property="Height" Value="25"/>
+        </Style>
+
+        <Style x:Key="ImageIconCasino" TargetType="Image">
+            <Setter Property="Source" Value="Assets/Media/Icons/casino.png"/>
+            <Setter Property="Height" Value="25"/>
+        </Style>
     </Application.Resources>
 </Application>

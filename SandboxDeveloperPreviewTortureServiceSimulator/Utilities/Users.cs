@@ -53,8 +53,6 @@ namespace SandboxDeveloperPreviewTortureServiceSimulator.Utilities
             "deal with the fact you don't win it",
             "stop trying there's no way you win it",
             "garryoldman",
-            "potus",
-            "vp",
             "Terry",
         };
 
@@ -63,7 +61,15 @@ namespace SandboxDeveloperPreviewTortureServiceSimulator.Utilities
             UserPhotoPath + "garry.png",
             UserPhotoPath + "gaben.png",
             UserPhotoPath + "melonsandwich.png",
-            UserPhotoPath + "patrick.png"
+            UserPhotoPath + "patrick.png",
+            UserPhotoPath + "markiplier.jpg",
+            UserPhotoPath + "walter.jpg",
+            UserPhotoPath + "crystalcastles.jpg",
+            UserPhotoPath + "alice.jpg",
+            UserPhotoPath + "yourdeath.jpg",
+            UserPhotoPath + "dylan.jpg",
+            UserPhotoPath + "laura.jpg",
+            UserPhotoPath + "sbox.jpg",
         };
     }
 }

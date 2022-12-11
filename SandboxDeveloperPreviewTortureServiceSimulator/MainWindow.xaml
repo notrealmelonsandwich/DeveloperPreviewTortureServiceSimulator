@@ -6,136 +6,19 @@
         xmlns:local="clr-namespace:SandboxDeveloperPreviewTortureServiceSimulator" xmlns:viewmodel="clr-namespace:SandboxDeveloperPreviewTortureServiceSimulator.MVVM.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:ParticipantViewModel}"
         mc:Ignorable="d"
         Title="s&amp;box developer preview torture service simulator"
-        Height="800" 
-        Width="1200"
-        WindowStartupLocation="CenterScreen">
+        Height="1000" 
+        Width="1700"
+        WindowStartupLocation="CenterScreen"
+        WindowState="Maximized">
     <Window.Resources>
-        <Style x:Key="LabelHeader" TargetType="TextBlock">
-            <Setter Property="FontFamily" Value="{StaticResource Poppins}"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="FontSize" Value="32"/>
-            <Setter Property="TextWrapping" Value="Wrap"/>
-        </Style>
-        <Style x:Key="LabelText" TargetType="TextBlock">
-            <Setter Property="FontFamily" Value="{StaticResource Poppins}"/>
-            <Setter Property="Foreground" Value="#c6d4ee"/>
-            <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="FontSize" Value="12"/>
-            <Setter Property="TextWrapping" Value="Wrap"/>
-            <Setter Property="LineHeight" Value="0.1"/>
-        </Style>
-
-        <Style TargetType="Button">
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="FontFamily" Value="{StaticResource Poppins}"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Padding" Value="20,10,20,10"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border CornerRadius="2" 
-                                Background="#3173eb" 
-                                BorderBrush="Transparent" 
-                                BorderThickness="0">
-                            <ContentPresenter x:Name="СontentPresenter" 
-                                              ContentTemplate="{TemplateBinding ContentTemplate}" 
-                                              Content="{TemplateBinding Content}" 
-                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                              Margin="{TemplateBinding Padding}" 
-                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="Button">
-                                <Border CornerRadius="2" 
-                                        Background="#5f93f0" 
-                                        BorderBrush="Transparent" 
-                                        BorderThickness="0">
-                                    <ContentPresenter x:Name="СontentPresenter" 
-                                                      ContentTemplate="{TemplateBinding ContentTemplate}" 
-                                                      Content="{TemplateBinding Content}" 
-                                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                      Margin="{TemplateBinding Padding}" 
-                                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                                </Border>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Trigger>
-                <Trigger Property="IsMouseOver" Value="False">
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="Button">
-                                <Border CornerRadius="2" 
-                                        Background="#3173eb" 
-                                        BorderBrush="Transparent" 
-                                        BorderThickness="0">
-                                    <ContentPresenter x:Name="СontentPresenter" 
-                                                      ContentTemplate="{TemplateBinding ContentTemplate}" 
-                                                      Content="{TemplateBinding Content}" 
-                                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                      Margin="{TemplateBinding Padding}" 
-                                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                                </Border>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-
-        <Style x:Key="BorderValues" TargetType="Border">
-            <Setter Property="Background" Value="#414453"/>
-            <Setter Property="CornerRadius" Value="7"/>
-            <Setter Property="Margin" Value="0,0,10,0"/>
-            <Setter Property="Padding" Value="8,0,8,0"/>
-        </Style>
-
-        <Style TargetType="TextBox">
-            <Setter Property="Background" Value="#FF53597B"/>
-            <Setter Property="Margin" Value="0,0,10,0"/>
-            <Setter Property="Padding" Value="8,0,8,0"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="FontFamily" Value="{StaticResource Poppins}"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Padding" Value="5,3,5,0"/>
-            <Setter Property="TextAlignment" Value="Right"/>
-            <Setter Property="Foreground" Value="#c6d4ee"/>
-            <Style.Resources>
-                <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="3"/>
-                </Style>
-            </Style.Resources>
-        </Style>
         
-        <!-- icons -->
-        <Style x:Key="ImageIconKey" TargetType="Image">
-            <Setter Property="Source" Value="Assets/Media/Icons/key.png"/>
-            <Setter Property="Height" Value="25"/>
-        </Style>
-
-        <Style x:Key="ImageIconSchedule" TargetType="Image">
-            <Setter Property="Source" Value="Assets/Media/Icons/schedule.png"/>
-            <Setter Property="Height" Value="25"/>
-        </Style>
-
-        <Style x:Key="ImageIconGroup" TargetType="Image">
-            <Setter Property="Source" Value="Assets/Media/Icons/group.png"/>
-            <Setter Property="Height" Value="25"/>
-        </Style>
-
-        <Style x:Key="ImageIconVisibility" TargetType="Image">
-            <Setter Property="Source" Value="Assets/Media/Icons/visibility.png"/>
-            <Setter Property="Height" Value="25"/>
-        </Style>
     </Window.Resources>
     <Grid Background="#3f4456">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="27*"/>
             <RowDefinition Height="265*"/>
@@ -143,16 +26,16 @@
 
         <Image Source="Assets/Media/Images/terry.jpg"
                Stretch="UniformToFill"
-               HorizontalAlignment="Center"
-               Grid.RowSpan="2">
+               HorizontalAlignment="Left"
+               Grid.RowSpan="2" Grid.ColumnSpan="3" Margin="-125,0,0,0">
             <Image.Effect>
                 <BlurEffect Radius="10"/>
             </Image.Effect>
         </Image>
 
-        <StackPanel Grid.RowSpan="2" Background="#B2242425"/>
+        <StackPanel Name="WindowBackground" Grid.RowSpan="2" Background="#B2242425" Grid.ColumnSpan="3"/>
 
-        <DockPanel>
+        <DockPanel Grid.Column="1">
             <StackPanel Orientation="Horizontal"
                         Margin="10,0,0,0"
                         DockPanel.Dock="Left">
@@ -162,10 +45,10 @@
                 <TextBlock Text="Developer Preview Torture Service Simulator"
                        VerticalAlignment="Center"
                        Style="{StaticResource LabelHeader}">
-                    <TextBlock.Effect>
-                        <DropShadowEffect ShadowDepth="2" BlurRadius="5"/>
-                    </TextBlock.Effect>
                 </TextBlock>
+                <StackPanel.Effect>
+                    <DropShadowEffect ShadowDepth="2" BlurRadius="5"/>
+                </StackPanel.Effect>
             </StackPanel>
             <StackPanel Orientation="Horizontal"
                         DockPanel.Dock="Right"
@@ -190,9 +73,9 @@
                 </DockPanel>
             </StackPanel>
         </DockPanel>
-        
 
-        <Border Background="#E82C303F" Margin="10,0,10,0" CornerRadius="5" Grid.Row="2">
+
+        <Border Background="#E82C303F" Margin="10,0,10,0" CornerRadius="5" Grid.Row="1" Grid.Column="1">
             <!--<Border.Effect>
                 <DropShadowEffect ShadowDepth="1" Color="#0004" Direction="90" BlurRadius="5"/>
             </Border.Effect>-->
@@ -206,7 +89,7 @@
                            Margin="0,0,0,20">
                     <Run Text="This is a simulator of the Developer Preview Torture Service which provides people a chance of getting access to the game s&amp;box - "/>
                     <Run Text="a Garry's Mod successor, by randomly giving five access keys away every 6 hours. "/>
-                    <Run Text="Here you can estimate your infinitely tiny odds in obtaining the game."/>
+                    <Run Text="Here you can estimate your infinitely tiny odds in obtaining it."/>
                     <LineBreak/>
                     <LineBreak/>
                     <Run Text="Write down the amount of people participating and run the simulation."/>
@@ -245,9 +128,9 @@
                                Foreground="#FF53597B"
                                Margin="10,0,0,0"/>
                 </StackPanel>
-                
+
                 <!-- simulation data inputs -->
-                
+
 
                 <!-- data visualization -->
                 <DockPanel Margin="0,0,0,25">
@@ -293,6 +176,19 @@
                                            FontSize="25"/>
                             </StackPanel>
                         </Border>
+
+                        <Border Style="{StaticResource BorderValues}" 
+                                Name="PanelWinner" 
+                                Visibility="Hidden">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Style="{StaticResource ImageIconCasino}"
+                                       Margin="0,0,10,0"/>
+                                <TextBlock Name="LabelWinner"
+                                           Text="..."
+                                           Style="{StaticResource LabelHeader}"
+                                           FontSize="25"/>
+                            </StackPanel>
+                        </Border>
                     </StackPanel>
                     <Button Name="ButtonStartSimulation" 
                             Content="start simulation"
@@ -311,22 +207,29 @@
                         </TextBlock>
                     </Button>
                 </DockPanel>
-                <ScrollViewer>
-                    <StackPanel Orientation="Vertical" Name="StackPanelParticipantGrid">
-                        <StackPanel Orientation="Horizontal">
-                            <Border CornerRadius="4,4,4,4"
+                <StackPanel Orientation="Vertical" Name="StackPanelParticipantGrid">
+                    <!--<StackPanel.Resources>
+                        <Storyboard x:Name="StoryboardGridOpacity">
+                            <DoubleAnimation x:Name="AnimationGridOpacity"
+                                             Storyboard.TargetProperty="Opacity"
+                                             Storyboard.TargetName="StackPanelParticipantGrid"
+                                             Duration="0:0:2"
+                                             From="1"
+                                             To="0"/>
+                        </Storyboard>
+                    </StackPanel.Resources>-->
+                    <StackPanel Orientation="Horizontal">
+                        <Border CornerRadius="4,4,4,4"
                                 Height="32" 
                                 Width="32"
                                 ToolTip="Rabscuttle"
                                 Margin="2,2,2,2">
-                                <Border.Background>
-                                    <ImageBrush Stretch="Fill" ImageSource="Assets/Media/UserPhotos/gaben.png"/>
-                                </Border.Background>
-                            </Border>
-                        </StackPanel>
+                            <Border.Background>
+                                <ImageBrush Stretch="Fill" ImageSource="Assets/Media/UserPhotos/gaben.png"/>
+                            </Border.Background>
+                        </Border>
                     </StackPanel>
-                </ScrollViewer>
-                
+                </StackPanel>
             </StackPanel>
         </Border>
 

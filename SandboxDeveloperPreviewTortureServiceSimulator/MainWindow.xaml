@@ -35,6 +35,8 @@
 
         <StackPanel Name="WindowBackground" Grid.RowSpan="2" Background="#B2242425" Grid.ColumnSpan="3"/>
 
+        
+
         <DockPanel Grid.Column="1">
             <StackPanel Orientation="Horizontal"
                         Margin="10,0,0,0"
@@ -50,9 +52,12 @@
                     <DropShadowEffect ShadowDepth="2" BlurRadius="5"/>
                 </StackPanel.Effect>
             </StackPanel>
+            
             <StackPanel Orientation="Horizontal"
                         DockPanel.Dock="Right"
-                        HorizontalAlignment="Right">
+                        HorizontalAlignment="Right"
+                        Visibility="Hidden">
+                
                 <Border CornerRadius="32"
                         Height="58" 
                         Width="58"
@@ -120,7 +125,7 @@
                                      TextChanged="RaffleParameters_TextChanged"/>
                         </StackPanel>
                     </StackPanel>
-                    <TextBlock Text="estimated odds 0.0%"
+                    <TextBlock Text="estimated odds 1.67%"
                                Name="TextBlockEstimatedOdds"
                                Style="{StaticResource LabelHeader}"
                                FontSize="20"
@@ -232,6 +237,27 @@
                 </StackPanel>
             </StackPanel>
         </Border>
+        <StackPanel Orientation="Vertical"
+                    VerticalAlignment="Bottom"
+                    HorizontalAlignment="Right"
+                    Grid.Column="1"
+                    Grid.Row="1"
+                    Margin="0,0,20,10">
+            <TextBlock Text="created by melonsandwich"
+                       Style="{StaticResource LabelText}"
+                       TextAlignment="Right"/>
+            
+            <TextBlock Text="STEAM_0:1:82476071"
+                       Style="{StaticResource LabelText}"
+                       TextAlignment="Right"
+                       FontWeight="Normal"/>
 
+            <Button Name="ButtonCopySteamID"
+                    Content="copy steam id"
+                    Click="ButtonCopySteamID_Click"
+                    Style="{StaticResource ButtonGray}"
+                    Padding="0"/>
+        </StackPanel>
+        
     </Grid>
 </Window>

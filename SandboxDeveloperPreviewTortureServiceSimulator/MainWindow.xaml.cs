@@ -236,6 +236,7 @@ namespace SandboxDeveloperPreviewTortureServiceSimulator
                 {
                     DrawWinner(winner);
                     LabelWinner.Text = winner.Name;
+                    LabelKeyAmount.Text = (int.Parse(LabelKeyAmount.Text) - 1).ToString();
                 });
                 await Task.Delay(3000);
                 Dispatcher.Invoke(() => UndrawWinner(winner));
@@ -296,7 +297,11 @@ namespace SandboxDeveloperPreviewTortureServiceSimulator
                 // a predefined one with a nickname and a photo, or with a random photo and nickname
                 ParticipantModel participant = GenerateParticipant(_random.NextBool());
                 if (i == 0)
+                {
+                    participant.Name = "You";
+                    participant.Photo = Users.Photos[1];
                     participant.IsClient = true;
+                }
 
                 ParticipantViewModel.Participants.Add(participant);
                 
@@ -388,6 +393,22 @@ namespace SandboxDeveloperPreviewTortureServiceSimulator
             catch (Exception) { }
 
             TextBlockEstimatedOdds.Text = $"estimated odds {estimatedOdds:0.00}%";
+        }
+
+        private const string SteamID = "STEAM_0:1:82476071";
+
+        private async void ButtonCopySteamID_Click(object sender, RoutedEventArgs e)
+        {
+            Clipboard.SetText(SteamID);
+            Dispatcher.Invoke(() =>
+            {
+                ButtonCopySteamID.Content = "copied";
+            });
+            await Task.Delay(1000);
+            Dispatcher.Invoke(() =>
+            {
+                ButtonCopySteamID.Content = "copy steam id";
+            });
         }
     }
 }

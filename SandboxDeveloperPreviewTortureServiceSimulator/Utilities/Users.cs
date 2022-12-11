@@ -37,7 +37,6 @@ namespace SandboxDeveloperPreviewTortureServiceSimulator.Utilities
             "GordonPeeman",
             "i love hot bebra",
             "venomquietcqc",
-            "dead roses society",
             "notrealmelonsandwich",
             "there's no way you win the raffle",
             "dogfood",
@@ -54,6 +53,24 @@ namespace SandboxDeveloperPreviewTortureServiceSimulator.Utilities
             "stop trying there's no way you win it",
             "garryoldman",
             "Terry",
+            "STEAM_0:1:82476071",
+            "I Love Torturing Myself",
+            "Ryan Gosling",
+            "Bebra",
+            "grayball is real",
+            "SCP-173",
+            "O5 Advisor",
+            "Walter White",
+            "Jesse Pinkman",
+            "Benedict Cumberbatch",
+            "Horseshit lover",
+            "Tim Cock",
+            "Battlefield Overwatch",
+            "#SBOX_FOR_COMRADES",
+            "I jerk off to Alyx",
+            "Anti-sex Supporter",
+            "Jerma985",
+            "Ken Rosenberg"
         };
 
         public static readonly List<string> Photos = new List<string>

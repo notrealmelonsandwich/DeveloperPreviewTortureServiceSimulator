@@ -12,7 +12,7 @@ namespace SandboxDeveloperPreviewTortureServiceSimulator.Utilities
         public static readonly Dictionary<string, string> Predefined = new Dictionary<string, string>
         {
            { "garry", UserPhotoPath + "garry.png" },
-           { "gaben", UserPhotoPath + "gaben.png" },
+           { "Rabscuttle", UserPhotoPath + "gaben.png" },
            { "melonsandwich", UserPhotoPath + "melonsandwich.png" },
            { "Patrick Bateman", UserPhotoPath + "patrick.png" },
         };

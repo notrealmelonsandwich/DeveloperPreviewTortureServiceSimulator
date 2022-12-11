@@ -141,13 +141,18 @@
             <RowDefinition Height="265*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal">
+        <StackPanel Orientation="Horizontal"
+                    Margin="10,0,0,0">
             <Image Source="Assets/Media/Icons/key.png"
                    Height="30"
                    Margin="0,0,10,0"/>
             <TextBlock Text="Developer Preview Torture Service Simulator"
                        VerticalAlignment="Center"
-                       Style="{StaticResource LabelHeader}"/>
+                       Style="{StaticResource LabelHeader}">
+                <TextBlock.Effect>
+                    <DropShadowEffect ShadowDepth="2" BlurRadius="5"/>
+                </TextBlock.Effect>
+            </TextBlock>
         </StackPanel>
 
         <Border Background="#2c303f" Margin="10,0,10,0" CornerRadius="5" Grid.Row="2">
@@ -169,7 +174,7 @@
                     <LineBreak/>
                     <Run Text="Write down the amount of people participating and run the simulation."/>
                     <LineBreak/>
-                    <Run Text="Let the luck be with you. This I miss."/>
+                    <Run Text="Let the luck be with you. The luck I miss so this is why I created this app to be lucky at least here."/>
                 </TextBlock>
                 
                 <!-- simulation data inputs -->
@@ -241,15 +246,24 @@
                             Click="ButtonStartSimulation_Click"
                             HorizontalAlignment="Right"/>
                 </DockPanel>
-                <ListView Name="ListViewParticipants" ItemsSource="{Binding Participants}">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <Image Source="{Binding Path=Photo}" 
-                                   ToolTip="{Binding Path=Name}"
-                                   Height="32"/>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                <ScrollViewer >
+                    <StackPanel Orientation="Vertical" Name="StackPanelParticipantGrid">
+                        <StackPanel Orientation="Horizontal">
+                            <Border CornerRadius="4,4,4,4"
+                                Height="32" 
+                                Width="32"
+                                ToolTip="Rabscuttle"
+                                Margin="2,2,2,2">
+                                <Border.Background>
+                                    <ImageBrush Stretch="Fill" ImageSource="Assets/Media/UserPhotos/gaben.png"/>
+                                </Border.Background>
+                            </Border>
+
+
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+                
             </StackPanel>
         </Border>
 

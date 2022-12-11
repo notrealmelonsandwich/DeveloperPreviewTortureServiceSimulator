@@ -9,7 +9,7 @@ namespace SandboxDeveloperPreviewTortureServiceSimulator.MVVM.ViewModel
     {
         private ParticipantModel _selectedParticipant;
 
-        public ObservableCollection<ParticipantModel> Participants { get; set; }
+        public static ObservableCollection<ParticipantModel> Participants { get; set; }
 
         public ParticipantViewModel()
         {

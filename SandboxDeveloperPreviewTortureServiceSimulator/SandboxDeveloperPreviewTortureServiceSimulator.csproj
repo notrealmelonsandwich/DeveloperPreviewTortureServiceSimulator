@@ -34,6 +34,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>sbox torture.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -230,6 +233,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Media\Icons\casino.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="sbox torture.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

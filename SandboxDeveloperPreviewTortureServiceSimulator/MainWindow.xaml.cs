@@ -4,6 +4,7 @@ using SandboxDeveloperPreviewTortureServiceSimulator.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -221,6 +222,7 @@ namespace SandboxDeveloperPreviewTortureServiceSimulator
         #region Animations
         private async Task GiveawayAnimation(ParticipantModel[] winners)
         {
+            string keyAmountText = LabelKeyAmount.Text;
             Dispatcher.Invoke(() =>
             {
                 ButtonStartSimulation.Visibility = Visibility.Hidden;
@@ -248,6 +250,7 @@ namespace SandboxDeveloperPreviewTortureServiceSimulator
                 ButtonStartMultipleSimulation.Visibility = Visibility.Visible;
                 PanelWinner.Visibility = Visibility.Hidden;
                 LabelWinner.Text = "...";
+                LabelKeyAmount.Text = keyAmountText;
             });
             ClearGrid();
         }
@@ -269,7 +272,15 @@ namespace SandboxDeveloperPreviewTortureServiceSimulator
                 if (winner.IsClient)
                     containsClient = true;
 
-                winners[i - 1] = winner;
+                if (!winners.ToList().ToList().Contains(winner))
+                {
+                    winners[i - 1] = winner;
+                }
+                else
+                {
+                    i -= 1;
+                    continue;
+                }
                 //DrawWinner(winner);
             }
 
@@ -397,8 +408,9 @@ namespace SandboxDeveloperPreviewTortureServiceSimulator
 
         private const string SteamID = "STEAM_0:1:82476071";
 
-        private async void ButtonCopySteamID_Click(object sender, RoutedEventArgs e)
+        private async void ButtonOpenSteam_Click(object sender, RoutedEventArgs e)
         {
+            /*
             Clipboard.SetText(SteamID);
             Dispatcher.Invoke(() =>
             {
@@ -408,7 +420,9 @@ namespace SandboxDeveloperPreviewTortureServiceSimulator
             Dispatcher.Invoke(() =>
             {
                 ButtonCopySteamID.Content = "copy steam id";
-            });
+            });*/
+
+            Process.Start("https://steamcommunity.com/melonsandwich");
         }
     }
 }

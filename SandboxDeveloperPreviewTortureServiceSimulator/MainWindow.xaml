@@ -166,7 +166,7 @@
                                 <Image Style="{StaticResource ImageIconGroup}"
                                        Margin="0,0,10,0"/>
                                 <TextBlock Name="LabelParticipantAmount"
-                                           Text="69"
+                                           Text="300"
                                            Style="{StaticResource LabelHeader}"
                                            FontSize="25"/>
                             </StackPanel>
@@ -250,11 +250,12 @@
             <TextBlock Text="STEAM_0:1:82476071"
                        Style="{StaticResource LabelText}"
                        TextAlignment="Right"
-                       FontWeight="Normal"/>
+                       FontWeight="Normal"
+                       Visibility="Collapsed"/>
 
             <Button Name="ButtonCopySteamID"
-                    Content="copy steam id"
-                    Click="ButtonCopySteamID_Click"
+                    Content="steam account"
+                    Click="ButtonOpenSteam_Click"
                     Style="{StaticResource ButtonGray}"
                     Padding="0"/>
         </StackPanel>

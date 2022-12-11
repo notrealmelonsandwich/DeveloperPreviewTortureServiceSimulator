@@ -58,5 +58,12 @@ namespace SandboxDeveloperPreviewTortureServiceSimulator.Utilities
             "Terry",
         };
 
+        public static readonly List<string> Photos = new List<string>
+        {
+            UserPhotoPath + "garry.png",
+            UserPhotoPath + "gaben.png",
+            UserPhotoPath + "melonsandwich.png",
+            UserPhotoPath + "patrick.png"
+        };
     }
 }

@@ -16,12 +16,12 @@ namespace SandboxDeveloperPreviewTortureServiceSimulator
     /// </summary>
     public partial class MainWindow : Window
     {
-        private const int MaxParticipantsInRow = 24;
+        private const int MaxParticipantsInRow = 30;
 
         private int _keys;
         private int _participants;
 
-        private Random _random;
+        public Random _random;
 
         public static MainWindow Instance { get; private set; }
 
@@ -42,13 +42,9 @@ namespace SandboxDeveloperPreviewTortureServiceSimulator
 
         #region Participant grid drawing
 
-        private void UpdateGrid()
+        private void DrawGrid()
         {
-            ParticipantGridRows.Clear();
-            StackPanelParticipantGrid.Children.Clear();
-
             CreateRow();
-
             foreach (StackPanel row in StackPanelParticipantGrid.Children)
             {
                 ParticipantGridRows.Add(row);
@@ -58,36 +54,63 @@ namespace SandboxDeveloperPreviewTortureServiceSimulator
             {
                 if (ParticipantGridRows[ParticipantGridRows.Count - 1].Children.Count >= MaxParticipantsInRow)
                     CreateRow();
+
                 DrawUserCell(participant);
-                
+                participant.Index = ParticipantGridRows[ParticipantGridRows.Count - 1].Children.Count - 1;
+                participant.RowIndex = ParticipantGridRows.Count - 1;
+
             }
+        }
+
+        private void UpdateGrid()
+        {
+            ClearGrid();
+            DrawGrid();
+        }
+
+        private void ClearGrid()
+        {
+            foreach (StackPanel stackPanel in StackPanelParticipantGrid.Children)
+            {
+                stackPanel.Children.RemoveRange(0, stackPanel.Children.Count);
+            }
+            StackPanelParticipantGrid.Children.RemoveRange(0, ParticipantGridRows.Count);
+
+            ParticipantViewModel.Participants.Clear();
+        }
+
+        private int GetDrawnUserCount()
+        {
+            int result = 0;
+            foreach (var row in ParticipantGridRows)
+            {
+                result += row.Children.Count;
+            }
+            return result;
         }
 
         private void DrawUserCell(ParticipantModel participant)
         {
-            // checking if there are not more or equals than MaxParticipantsInRow otherwise creating a new row
-            //if (!(ParticipantGridRows[ParticipantGridRows.Count - 1].Children.Count >= MaxParticipantsInRow))
-            //{
-                Border border = new Border();
-                ImageBrush borderBrush = new ImageBrush();
+            Border border = new Border();
+            ImageBrush borderBrush = new ImageBrush();
 
-                border.CornerRadius = new CornerRadius(4);
-                border.Height = 32;
-                border.Width = 32;
-                border.ToolTip = participant.Name;
-                border.Margin = new Thickness(2);
-                border.Background = borderBrush;
+            border.CornerRadius = new CornerRadius(4);
+            border.Height = 32;
+            border.Width = 32;
+            border.ToolTip = participant.Name;
+            border.Margin = new Thickness(2);
+            border.Background = borderBrush;
 
-                borderBrush.Stretch = Stretch.Fill;
-                borderBrush.ImageSource = new BitmapImage(new Uri($"pack://application:,,,/{participant.Photo}"));
+            borderBrush.Stretch = Stretch.Fill;
+            borderBrush.ImageSource = new BitmapImage(new Uri($"pack://application:,,,/{participant.Photo}"));
 
-                ParticipantGridRows[ParticipantGridRows.Count - 1].Children.Add(border);
-            /*}
-            //else
+            if (participant.IsClient)
             {
-                CreateRow();
-                DrawUserCell(participant);
-            }*/
+                border.BorderThickness = new Thickness(3);
+                border.BorderBrush = Brushes.Pink;
+            }
+
+            ParticipantGridRows[ParticipantGridRows.Count - 1].Children.Add(border);
         }
 
         private void CreateRow()
@@ -99,6 +122,18 @@ namespace SandboxDeveloperPreviewTortureServiceSimulator
             ParticipantGridRows.Add(stackPanel);
         }
 
+        private Border GetParticipantCell(ParticipantModel participant)
+        {
+            return (Border)ParticipantGridRows[participant.RowIndex].Children[participant.Index];
+        }
+
+        private void DrawWinner(ParticipantModel participant)
+        {
+            Border border = GetParticipantCell(participant);
+            border.BorderThickness = new Thickness(3);
+            border.BorderBrush = Brushes.Yellow;
+        }
+
         #endregion
 
         private void ButtonStartSimulation_Click(object sender, RoutedEventArgs e)
@@ -106,13 +141,90 @@ namespace SandboxDeveloperPreviewTortureServiceSimulator
             int.TryParse(TextBoxKeyAmount.Text, out _keys);
             int.TryParse(TextBoxParticipants.Text, out _participants);
 
-            Simulate(_keys, _participants);
+            Simulate(_keys, _participants, false);
         }
 
-        private void Simulate(int keys, int participants)
+        private void ButtonStartMultipleSimulation_Click(object sender, RoutedEventArgs e)
         {
+            int.TryParse(TextBoxKeyAmount.Text, out _keys);
+            int.TryParse(TextBoxParticipants.Text, out _participants);
+
+            Simulate(_keys, _participants, true);
+        }
+
+        private void Simulate(int keys, int participants, bool multipleTimes)
+        {
+            ClearGrid();
             GenerateUsers(participants);
-            UpdateGrid();
+
+            if (!multipleTimes)
+            {
+                DrawGrid();
+                //UpdateGrid();
+                PickWinner();
+            }
+            else
+            {
+                //bool victory = false;
+                int iterations = 1;
+
+                while (true)
+                {
+                    ParticipantModel[] winners = new ParticipantModel[_keys];
+                    bool containsClient = false;
+
+                    for (int i = 1; i <= _keys; i++)
+                    {
+                        ParticipantModel winner = ParticipantViewModel.Participants[_random.Next(0, ParticipantViewModel.Participants.Count)];
+                        if (winner.IsClient)
+                            containsClient = true;
+
+                        winners[i - 1] = winner;
+                    }
+
+                    if (!containsClient)
+                    {
+                        iterations++;
+                    }
+                    else
+                    {
+                        double hours = iterations * 6;
+                        TimeSpan span = TimeSpan.FromHours(hours);
+                        MessageBox.Show($"This is {hours} hours of tireless waiting\nOR: {span.TotalDays} days, ~{span.TotalDays / 30:0.00} months, ~{(span.TotalDays / 365):0.00} years", $"You won after {iterations} times!");
+                        break;
+                    }
+                }
+            }
+        }
+
+        private void PickWinner()
+        {
+            ParticipantModel[] winners = new ParticipantModel[_keys];
+            bool containsClient = false;
+
+            for (int i = 1; i <= _keys; i++)
+            {
+                ParticipantModel winner = ParticipantViewModel.Participants[_random.Next(0, ParticipantViewModel.Participants.Count)];
+                if (winner.IsClient)
+                    containsClient = true;
+
+                winners[i - 1] = winner;
+                DrawWinner(winner);
+            }
+
+            string text = "The winners are: ";
+            for (int i = 0; i < winners.Length; i++)
+            {
+                text += $"{winners[i].Name}";
+                if (winners[i].IsClient)
+                    text += " (You)";
+
+                if (i != winners.Length - 1)
+                    text += ", ";
+            }
+
+            string caption = containsClient ? "You won" : "You lost. Again.";
+            MessageBox.Show(text, caption);
         }
 
         private void GenerateUsers(int amount)
@@ -121,7 +233,11 @@ namespace SandboxDeveloperPreviewTortureServiceSimulator
             {
                 // deciding which type of a participant to add:
                 // a predefined one with a nickname and a photo, or with a random photo and nickname
-                ((ObservableCollection<ParticipantModel>)ParticipantViewModel.Participants).Add(GenerateParticipant(_random.NextBool()));
+                ParticipantModel participant = GenerateParticipant(_random.NextBool());
+                if (i == 0)
+                    participant.IsClient = true;
+
+                ParticipantViewModel.Participants.Add(participant);
                 
             }
         }
@@ -187,6 +303,33 @@ namespace SandboxDeveloperPreviewTortureServiceSimulator
                     list.Add(participant);
             }
             return list;
+        }
+
+        private void RaffleParameters_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            // bruh wpf is shit
+            if (TextBlockEstimatedOdds == null || TextBoxKeyAmount == null || TextBoxParticipants == null)
+                return;
+
+            double estimatedOdds = 0;
+            double keys = 0;
+            double users = 0;
+
+            try
+            {
+                keys = (double)int.Parse(TextBoxKeyAmount.Text);
+                users = (double)int.Parse(TextBoxParticipants.Text);
+                estimatedOdds = keys / users * 100;
+
+                LabelKeyAmount.Text = keys.ToString("0");
+                LabelParticipantAmount.Text = users.ToString("0");
+
+                if (keys > users)
+                    return;
+            }
+            catch (Exception) { }
+
+            TextBlockEstimatedOdds.Text = $"estimated odds {estimatedOdds:0.00}%";
         }
     }
 }

@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="s&amp;box developer preview torture service simulator"
         Height="800" 
-        Width="1000"
+        Width="1200"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style x:Key="LabelHeader" TargetType="TextBlock">
@@ -141,21 +141,58 @@
             <RowDefinition Height="265*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal"
-                    Margin="10,0,0,0">
-            <Image Source="Assets/Media/Icons/key.png"
+        <Image Source="Assets/Media/Images/terry.jpg"
+               Stretch="UniformToFill"
+               HorizontalAlignment="Center"
+               Grid.RowSpan="2">
+            <Image.Effect>
+                <BlurEffect Radius="10"/>
+            </Image.Effect>
+        </Image>
+
+        <StackPanel Grid.RowSpan="2" Background="#B2242425"/>
+
+        <DockPanel>
+            <StackPanel Orientation="Horizontal"
+                        Margin="10,0,0,0"
+                        DockPanel.Dock="Left">
+                <Image Source="Assets/Media/Icons/key.png"
                    Height="30"
                    Margin="0,0,10,0"/>
-            <TextBlock Text="Developer Preview Torture Service Simulator"
+                <TextBlock Text="Developer Preview Torture Service Simulator"
                        VerticalAlignment="Center"
                        Style="{StaticResource LabelHeader}">
-                <TextBlock.Effect>
-                    <DropShadowEffect ShadowDepth="2" BlurRadius="5"/>
-                </TextBlock.Effect>
-            </TextBlock>
-        </StackPanel>
+                    <TextBlock.Effect>
+                        <DropShadowEffect ShadowDepth="2" BlurRadius="5"/>
+                    </TextBlock.Effect>
+                </TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal"
+                        DockPanel.Dock="Right"
+                        HorizontalAlignment="Right">
+                <Border CornerRadius="32"
+                        Height="58" 
+                        Width="58"
+                        Margin="0,0,10,0">
+                    <Border.Background>
+                        <ImageBrush Stretch="Fill" ImageSource="Assets/Media/UserPhotos/gaben.png"/>
+                    </Border.Background>
+                </Border>
+                <DockPanel Margin="0,0,10,0"
+                           VerticalAlignment="Center">
+                    <TextBlock Text="melonsandwich" 
+                               Style="{StaticResource LabelText}"
+                               DockPanel.Dock="Top"/>
+                    <TextBlock Text="edit profile"
+                               Style="{StaticResource LabelText}"
+                               DockPanel.Dock="Bottom"
+                               FontWeight="Normal"/>
+                </DockPanel>
+            </StackPanel>
+        </DockPanel>
+        
 
-        <Border Background="#2c303f" Margin="10,0,10,0" CornerRadius="5" Grid.Row="2">
+        <Border Background="#E82C303F" Margin="10,0,10,0" CornerRadius="5" Grid.Row="2">
             <!--<Border.Effect>
                 <DropShadowEffect ShadowDepth="1" Color="#0004" Direction="90" BlurRadius="5"/>
             </Border.Effect>-->
@@ -174,27 +211,43 @@
                     <LineBreak/>
                     <Run Text="Write down the amount of people participating and run the simulation."/>
                     <LineBreak/>
-                    <Run Text="Let the luck be with you. The luck I miss so this is why I created this app to be lucky at least here."/>
+                    <Run Text="Let the luck be with you. The luck is what I miss so this is why I created this app to be lucky at least here."/>
                 </TextBlock>
-                
-                <!-- simulation data inputs -->
-                <StackPanel Orientation="Horizontal"
-                            Margin="10,0,0,10">
-                    <Image Style="{StaticResource ImageIconKey}"
-                           Margin="0,0,10,0"/>
-                    <TextBox Name="TextBoxKeyAmount" 
-                             Text="5"
-                             Width="250"/>
-                </StackPanel>
 
                 <StackPanel Orientation="Horizontal"
-                            Margin="10,0,0,25">
-                    <Image Style="{StaticResource ImageIconGroup}"
-                           Margin="0,0,10,0"/>
-                    <TextBox Name="TextBoxParticipants" 
-                             Text="300"
-                             Width="250"/>
+                            Margin="0,0,0,25">
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal"
+                                    Margin="10,0,0,10">
+                            <Image Style="{StaticResource ImageIconKey}"
+                                   Margin="0,0,10,0"/>
+                            <TextBox Name="TextBoxKeyAmount" 
+                                     Text="5"
+                                     Width="250"
+                                     TextChanged="RaffleParameters_TextChanged"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal"
+                                    Margin="10,0,0,0">
+                            <Image Style="{StaticResource ImageIconGroup}"
+                                   Margin="0,0,10,0"/>
+                            <TextBox Name="TextBoxParticipants" 
+                                     Text="300"
+                                     Width="250"
+                                     TextChanged="RaffleParameters_TextChanged"/>
+                        </StackPanel>
+                    </StackPanel>
+                    <TextBlock Text="estimated odds 0.0%"
+                               Name="TextBlockEstimatedOdds"
+                               Style="{StaticResource LabelHeader}"
+                               FontSize="20"
+                               VerticalAlignment="Center"
+                               Foreground="#FF53597B"
+                               Margin="10,0,0,0"/>
                 </StackPanel>
+                
+                <!-- simulation data inputs -->
+                
 
                 <!-- data visualization -->
                 <DockPanel Margin="0,0,0,25">
@@ -244,9 +297,21 @@
                     <Button Name="ButtonStartSimulation" 
                             Content="start simulation"
                             Click="ButtonStartSimulation_Click"
-                            HorizontalAlignment="Right"/>
+                            HorizontalAlignment="Right"
+                            DockPanel.Dock="Right"/>
+
+                    <Button Name="ButtonStartMultipleSimulation" 
+                            Click="ButtonStartMultipleSimulation_Click"
+                            HorizontalAlignment="Right"
+                            DockPanel.Dock="Right"
+                            Margin="0,0,10,0">
+                        <TextBlock>
+                            <Run Text="simulate until victory"/>
+                            <Run FontWeight="Regular" Text="(may stuck the program)"/>
+                        </TextBlock>
+                    </Button>
                 </DockPanel>
-                <ScrollViewer >
+                <ScrollViewer>
                     <StackPanel Orientation="Vertical" Name="StackPanelParticipantGrid">
                         <StackPanel Orientation="Horizontal">
                             <Border CornerRadius="4,4,4,4"
@@ -258,8 +323,6 @@
                                     <ImageBrush Stretch="Fill" ImageSource="Assets/Media/UserPhotos/gaben.png"/>
                                 </Border.Background>
                             </Border>
-
-
                         </StackPanel>
                     </StackPanel>
                 </ScrollViewer>

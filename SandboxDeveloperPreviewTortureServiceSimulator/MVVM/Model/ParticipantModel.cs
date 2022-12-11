@@ -12,6 +12,9 @@ namespace SandboxDeveloperPreviewTortureServiceSimulator.MVVM.Model
         private string _photo;
         private bool _isClient;
         private bool _isWinner;
+        
+        public int Index { get; set; }
+        public int RowIndex { get; set; }
 
         public string Name
         {
@@ -58,10 +61,13 @@ namespace SandboxDeveloperPreviewTortureServiceSimulator.MVVM.Model
         /// </summary>
         public ParticipantModel()
         {
-            Random random = new Random();
-            Name = Users.Nicknames[random.Next(0, Users.Nicknames.Count)];
+            Name = Users.Nicknames[MainWindow.Instance._random.Next(0, Users.Nicknames.Count)];
+            Photo = Users.Photos[MainWindow.Instance._random.Next(0, Users.Photos.Count)];
 
-            Photo = "Assets/Media/UserPhotos/patrick.png";
+            /*
+            if (Name == "melonsandwich")
+                IsClient = true;
+            */
         }
 
         public ParticipantModel(string name)
